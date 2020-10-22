@@ -22,42 +22,15 @@ public class JpaMain {
     tx.begin();
 
     try {
-      /*  회원 생성
-      Member member = new Member();
-      member.setId(1L);
-      member.setName("helloA");
+      Member member1 = new Member(150L, "A");
+      Member member2 = new Member(160L, "B");
 
-      // 저장한다.
-      entityManager.persist(member); */
+      // 쓰기 지연 SQL 저장소에 저장된다.
+      entityManager.persist(member1);
+      entityManager.persist(member2);
+      System.out.println("------------");
 
-
-      /* 회원 수정
-      // 수정할 대상을 가져온다.
-      Member findMember = entityManager.find(Member.class, 1L);
-      System.out.println("id: " + findMember.getId());
-      System.out.println("name: " + findMember.getName());
-
-      findMember.setName("helloJPA");
-
-      // 수정한 객체를 따로 저장하지 않아도 된다.
-      // 데이터를 JPA를 통해 가져오면 변경 여부를 트랜잭션 커밋 시점에
-      // 다 체크해서 바뀐 내용에 대해 업데이트 쿼리를 만들어 날린다.*/
-
-
-      // JPA는 테이블 대상이 아니라 객체를 대상으로 쿼리를 짠다.
-      // 따라서 Member는 테이블이 아니라 객체를 가리킨다.
-      List<Member> result = entityManager
-          .createQuery("select m from Member as m", Member.class)
-          // 페이지네이션을 할 수도 있다. 아래는 1번부터 10개 가져온다.
-          .setFirstResult(1)
-          .setMaxResults(10)
-          .getResultList();
-
-      for (Member member : result) {
-        System.out.println("name: " + member.getName());
-      }
-
-      // 커밋한다.
+      // 실제 쿼리가 날아간다.
       tx.commit();
     } catch (Exception e) {
       tx.rollback();
