@@ -1,6 +1,5 @@
 package hellojpa;
 
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -22,15 +21,12 @@ public class JpaMain {
     tx.begin();
 
     try {
-      Member member1 = new Member(150L, "A");
-      Member member2 = new Member(160L, "B");
+      Member member = new Member(200L, "A");
+      entityManager.persist(member);
 
-      // 쓰기 지연 SQL 저장소에 저장된다.
-      entityManager.persist(member1);
-      entityManager.persist(member2);
-      System.out.println("------------");
+      entityManager.flush();
+      System.out.println("-----");
 
-      // 실제 쿼리가 날아간다.
       tx.commit();
     } catch (Exception e) {
       tx.rollback();
