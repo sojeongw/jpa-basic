@@ -21,16 +21,6 @@ public class JpaMain {
     tx.begin();
 
     try {
-      Member member1 = entityManager.find(Member.class, 150L);
-      member1.setName("AAAAA");
-
-      entityManager.clear();
-
-      // 영속성 컨텍스트를 지워서 1차 캐시에 없으므로 다시 올리기 위해 select 쿼리가 다시 실행된다.
-      Member member2 = entityManager.find(Member.class, 150L);
-
-      System.out.println("-----");
-
       tx.commit();
     } catch (Exception e) {
       tx.rollback();
