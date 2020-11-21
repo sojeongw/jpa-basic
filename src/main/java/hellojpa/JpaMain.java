@@ -21,6 +21,10 @@ public class JpaMain {
     tx.begin();
 
     try {
+      Member member = new Member();
+      member.setUsername("user");
+
+      entityManager.persist(member);
       tx.commit();
     } catch (Exception e) {
       tx.rollback();

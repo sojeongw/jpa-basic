@@ -1,20 +1,15 @@
 package hellojpa;
 
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 // JPA가 사용하는 데이터라고 인식한다.
 @Entity
+@SequenceGenerator(name = "member_seq_generator", sequenceName = "member_seq")
 public class Member {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
   private Long id;
 
   @Column(name = "name")
