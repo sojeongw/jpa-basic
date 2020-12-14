@@ -15,6 +15,10 @@ public class Member {
   @Column(name = "name")
   private String username;
 
+  @OneToOne
+  @JoinColumn(name = "LOCKER_ID")
+  private Locker locker;
+
   private Integer age;
 
   // DB에는 enum 타입이 없어서 이 애너테이션을 달아줘야 한다.
