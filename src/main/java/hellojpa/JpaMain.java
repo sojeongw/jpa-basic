@@ -21,6 +21,24 @@ public class JpaMain {
     tx.begin();
 
     try {
+      Movie movie = new Movie();
+      movie.setDirector("A");
+      movie.setActor("B");
+      movie.setName("바람과 함께 사라지다");
+      movie.setPrice(10000);
+
+      entityManager.persist(movie);
+
+      entityManager.flush();
+      entityManager.clear();
+
+//      Movie findMovie = entityManager.find(Movie.class, movie.getId());
+//      System.out.println("result: " + findMovie);
+
+      // 복잡한 쿼리가 나간다.
+      Item item = entityManager.find(Item.class, movie.getId());
+      System.out.println("item: " + item);
+
       tx.commit();
     } catch (Exception e) {
       tx.rollback();
