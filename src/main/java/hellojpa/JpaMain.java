@@ -14,37 +14,28 @@ public class JpaMain {
 
     // 엔티티 매니저를 꺼낸다.
     // 엔티티 매니저는 트랜잭션마다 만들어줘야 한다.
-    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    EntityManager em = entityManagerFactory.createEntityManager();
 
     // JPA의 모든 작업은 트랜잭션 내에서 해야한다.
-    EntityTransaction tx = entityManager.getTransaction();
+    EntityTransaction tx = em.getTransaction();
     tx.begin();
 
     try {
-      Movie movie = new Movie();
-      movie.setDirector("A");
-      movie.setActor("B");
-      movie.setName("바람과 함께 사라지다");
-      movie.setPrice(10000);
+      Child child1 = new Child();
+      Child child2 = new Child();
 
-      entityManager.persist(movie);
+      Parent parent = new Parent();
+      parent.addChild(child1);
+      parent.addChild(child2);
 
-      entityManager.flush();
-      entityManager.clear();
-
-//      Movie findMovie = entityManager.find(Movie.class, movie.getId());
-//      System.out.println("result: " + findMovie);
-
-      // 복잡한 쿼리가 나간다.
-      Item item = entityManager.find(Item.class, movie.getId());
-      System.out.println("item: " + item);
+      em.persist(parent);
 
       tx.commit();
     } catch (Exception e) {
       tx.rollback();
     } finally {
       // 엔티티 매니저가 내부적으로 데이터베이스 커넥션을 물고 동작하기 때문에 쓰고 나서 꼭 닫아줘야 한다.
-      entityManager.close();
+      em.close();
     }
 
     // 전체 애플리케이션이 끝나면 팩토리까지 닫아준다.
