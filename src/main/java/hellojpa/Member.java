@@ -1,5 +1,6 @@
 package hellojpa;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,31 +18,24 @@ public class Member {
   @Column(name = "name")
   private String username;
 
-  @OneToOne
-  @JoinColumn(name = "LOCKER_ID")
-  private Locker locker;
+  public boolean isWork() {
+    // 응집성 있는 로직 구현
+    return true;
+  }
 
-  @OneToMany(mappedBy = "member")
-  private List<MemberProduct> memberProducts = new ArrayList<>();
+  @Embedded
+  private Period period;
 
-  private Integer age;
+  @Embedded
+  private Address address;
 
-  // DB에는 enum 타입이 없어서 이 애너테이션을 달아줘야 한다.
-  @Enumerated(EnumType.STRING)
-  private RoleType roleType;
-
-  // 날짜 타입은 @Temporal을 달아준다.
-  // DB는 DATE, TIME, TIMESTAMP로 나뉘기 때문에 정보를 줘야 한다.
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdDate;
-
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date lastModifiedDate;
-
-  // varchar를 넘어서는 큰 컨텐츠를 넣고 싶을 때 사용한다.
-  // String 타입이면 DB에서 clob으로 생성된다.
-  @Lob
-  private String description;
+  @Embedded
+  @AttributeOverrides({
+      @AttributeOverride(name = "city", column = @Column(name = "work_city")),
+      @AttributeOverride(name = "street", column = @Column(name = "work_street")),
+      @AttributeOverride(name = "zipcode", column = @Column(name = "work_zipcode"))
+  })
+  private Address workAddress;
 
   public Long getId() {
     return id;
@@ -59,43 +53,19 @@ public class Member {
     this.username = username;
   }
 
-  public Integer getAge() {
-    return age;
+  public Period getPeriod() {
+    return period;
   }
 
-  public void setAge(Integer age) {
-    this.age = age;
+  public void setPeriod(Period period) {
+    this.period = period;
   }
 
-  public RoleType getRoleType() {
-    return roleType;
+  public Address getAddress() {
+    return address;
   }
 
-  public void setRoleType(RoleType roleType) {
-    this.roleType = roleType;
-  }
-
-  public Date getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(Date createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public Date getLastModifiedDate() {
-    return lastModifiedDate;
-  }
-
-  public void setLastModifiedDate(Date lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
+  public void setAddress(Address address) {
+    this.address = address;
   }
 }
