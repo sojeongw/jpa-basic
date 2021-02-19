@@ -21,12 +21,15 @@ public class JpaMain {
     tx.begin();
 
     try {
-      Member member = new Member();
-      member.setUsername("name");
-      member.setAddress(new Address("city", "street", "10001"));
-      member.setPeriod(new Period());
+      Address address = new Address("city", "street", "10012");
 
+      Member member = new Member();
+      member.setUsername("member1");
+      member.setAddress(address);
       em.persist(member);
+
+      Address newAddress = new Address("new city", address.getStreet(), address.getZipcode());
+      member.setAddress(newAddress);
 
       tx.commit();
     } catch (Exception e) {
