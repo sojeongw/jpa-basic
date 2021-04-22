@@ -5,6 +5,8 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/../kimyounghan-orm-jpa-shop/pom.xml" />
+        <option value="$PROJECT_DIR$/../jpa-shop/pom.xml" />
       </list>
     </option>
   </component>
