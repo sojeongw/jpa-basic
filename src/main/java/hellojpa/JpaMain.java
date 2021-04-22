@@ -1,6 +1,6 @@
 package hellojpa;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -22,9 +22,11 @@ public class JpaMain {
     tx.begin();
 
     try {
-      List<Member> resultList = em
-          .createQuery("select m from Member m where m.username like '%kim%'", Member.class)
-          .getResultList();
+      Member member = new Member();
+      member.setCreatedBy("kim");
+      member.setCreatedDate(LocalDateTime.now());
+
+      em.persist(member);
 
       tx.commit();
     } catch (Exception e) {

@@ -1,10 +1,10 @@
 package hellojpa;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -14,13 +14,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 // JPA가 사용하는 데이터라고 인식한다.
 @Entity
 @SequenceGenerator(name = "member_seq_generator", sequenceName = "member_seq")
-public class Member {
+public class Member extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
@@ -63,7 +62,6 @@ public class Member {
 //  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 //  @JoinColumn(name = "MEMBER_ID")
 //  private List<AddressEntity> addressHistory = new ArrayList<>();
-
 
   public List<Address> getAddressHistory() {
     return addressHistory;
